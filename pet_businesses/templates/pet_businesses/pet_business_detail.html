@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load custom_tags %}
+
+<div class="page-wrapper">
+    <div class="container">
+
+        <!-- Displaying pet business detail -->
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="post-title">{{ pet_business_detail.firm }}</h2>
+                <p class="post-subtitle spacing-up">With us since {{ pet_business_detail.date_created }}</p>
+                <p>
+                    {% for pet_type in pet_business_detail.pet_type_tags %}
+                    <span class="wrapping-border">#{{ pet_type }}</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {% for service_type in pet_business_detail.service_type_tags %}
+                    <span class="wrapping-border">#{{ service_type }}</span>
+                    {% endfor %}
+                </p>
+                <p>{{ pet_business_detail.description | safe }}</p>
+                <hr class="orange-hr">
+                <div class="row spacing-up">
+                    <div class="col-md-7">
+                        <p class="fw-bold">Feel free to contact us</p>
+                        <p class="right-move-up">
+                            <img class="picto" src="{% static 'images/mapmarker.svg' %}" alt="Address marker">
+                            {{ pet_business_detail.firm }} <br>
+                            {{ pet_business_detail.street }} {{ pet_business_detail.number }} <br>
+                            {{ pet_business_detail.npa }} {{ pet_business_detail.locality }}
+                        </p>
+                        <p class="right-move">
+                            <a class="link" href="tel:{{ pet_business_detail.phone }}">
+                                <img class="picto" src="{% static 'images/mobile.svg' %}"
+                                    alt="Phone">{{ pet_business_detail.phone }}
+                            </a>
+                        </p>
+                        <p class="right-move">
+                            <a class="link" href="mailto:{{ pet_business_detail.email }}">
+                                <img class="picto" src="{% static 'images/at.svg' %}"
+                                    alt="Email">{{ pet_business_detail.email }}
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-md-5">
+                        <p class="fw-bold">Follow us on</p>
+                        <p>
+                            {% if pet_business_detail.website %}
+                            <a href="{{ pet_business_detail.website }}" target="_blank"><img class="picto"
+                                    src="{% static 'images/website.svg' %}" alt="Website"></a>
+                            {% endif %}
+
+                            {% if pet_business_detail.linkedin %}
+                            <a href="{{ pet_business_detail.linkedin }}" target="_blank"><img class="picto"
+                                    src="{% static 'images/linkedin.svg' %}" alt="LinkedIn"></a>
+                            {% endif %}
+
+                            {% if pet_business_detail.facebook %}
+                            <a href="{{ pet_business_detail.facebook }}" target="_blank"><img class="picto"
+                                    src="{% static 'images/facebook.svg' %}" alt="Facebook"></a>
+                            {% endif %}
+
+                            {% if pet_business_detail.instagram %}
+                            <a href="{{ pet_business_detail.instagram }}" target="_blank"><img class="picto"
+                                    src="{% static 'images/instagram.svg' %}" alt="Instagram"></a>
+                            {% endif %}
+
+                            {% if pet_business_detail.tiktok %}
+                            <a href="{{ pet_business_detail.tiktok }}" target="_blank"><img class="picto"
+                                    src="{% static 'images/tiktok.svg' %}" alt="Tiktok"></a>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <hr class="orange-hr">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+
+                <!-- Conditional default picture display -->
+
+                {% if pet_business_detail.featured_image and "placeholder" in pet_business_detail.featured_image.url %}
+                <img class="card-img-top rounded-corner" src="{% static 'images/defaultpetbusiness.webp' %}"
+                    alt="Default pet business image">
+                {% else %}
+                <img class="card-img-top rounded-corner" src="{{ pet_business_detail.featured_image.url }}"
+                    alt="{{ pet_business.title }}">
+                {% endif %}
+
+                <div class="like-wrapper">
+                    <div class="row justify-content-evenly">
+
+                        <!-- Comments count -->
+
+                        <p class="col d-flex justify-content-end"><img class="picto"
+                                src="{% static 'images/comment.svg' %}" alt="Comment">:
+                            {{ comment_count }}</p>
+
+                        <!-- Likes count -->
+
+                        <p class="col text-center"><img class="picto" src="{% static 'images/like.svg' %}" alt="Like">:
+                            {{ pet_business_detail.likes.count }}</p>
+
+                        <!-- Like & Unlike Button -->
+
+                        {% if user|in_group:"Pet Owners" %}
+                        <form class="col d-flex justify-content-start"
+                            action="{% url 'like_post' pet_business_detail.id %}" method="POST">
+                            {% csrf_token %}
+                            {% if user.is_authenticated %}
+                            {% if has_liked %}
+                            <button type="submit" class="btn btn-danger">Unlike</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-warning">Like</button>
+                            {% endif %}
+                            {% else %}
+                            <p>Log in to like it.</p>
+                            {% endif %}
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Displaying Comments -->
+
+    <div class="row spacing-up">
+        <div class="col-md-6">
+            <h3>Comments:</h3>
+            {% for comment in comments %}
+            <div class="p-2 border comments
+                            {% if not comment.approved and comment.author == user %}
+                            faded{% elif not comment.approved %} d-none{% endif %}">
+                <p class="font-weight-bold">
+                    {{ comment.author }}
+                    <span class="font-weight-normal">
+                        {{ comment.created_on }}
+                    </span> wrote:
+                </p>
+                <div id="comment{{ comment.id }}">
+                    {{ comment.content | linebreaks }}
+                </div>
+                {% if not comment.approved and comment.author == user %}
+                <p class="approval">
+                    This comment is awaiting approval
+                </p>
+                {% endif %}
+                {% if user|in_group:"Pet Owners" %}
+                {% if user.is_authenticated and comment.author == user %}
+                <button class="btn btn-warning btn-edit" comment_id="{{ comment.id }}">Edit</button>
+                <button class="btn btn-danger btn-delete" comment_id="{{ comment.id }}">Delete</button>
+                {% endif %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Writing new comments -->
+
+        <div class="col-md-6">
+            <div class="card-body">
+                {% if user.is_authenticated and user|in_group:"Pet Owners" %}
+                <h3>Write a comment:</h3>
+                <p>Posting as: {{ user.username }}</p>
+                <form id="commentForm" method="post">
+                    {{ comment_form | crispy }}
+                    {% csrf_token %}
+                    <button id="submitButton" type="submit" class="btn page-link">Submit</button>
+                </form>
+                {% elif not user.is_authenticated %}
+                <p>Please log in to write a new comment or like a service.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete confirmation modal -->
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete comment?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your comment?
+                This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="deleteConfirm" href="#" class="btn
+                    btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block extras %}
+<script src="{% static 'js/comments.js' %}"></script>
+{% endblock %}
