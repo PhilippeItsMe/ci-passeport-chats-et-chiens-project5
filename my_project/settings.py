@@ -11,10 +11,10 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',
-                 '8000-philippeits-ciportfolio-8uof5fohxd7.ws-eu117.gitpod.io',
+                 '8000-philippeits-ciportfolio-cvf4eg2kc6e.ws-eu117.gitpod.io',
                  '.herokuapp.com']
 
 INSTALLED_APPS = [
