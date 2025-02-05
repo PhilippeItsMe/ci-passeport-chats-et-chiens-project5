@@ -66,7 +66,9 @@ h3 {
 
 p,
 a,
-.btn,
+.yellow-btn,
+.orange-btn,
+.submit-btn,
 th,
 li {
     font-family: "Quicksand", serif;
@@ -96,6 +98,8 @@ li {
     background-color: var(--yellow);
     border: 1px solid var(--yellow);
     border-radius: 0.375rem;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .yellow-btn:hover {
@@ -110,12 +114,12 @@ li {
     border: 1px solid var(--orange);
     border-radius: 0.375rem;
     text-decoration: none;
+    display: inline-block;
 }
 
 .orange-btn:hover {
     color: var(--orange);
     background-color: var(--offwhite);
-    text-decoration: none;
 }
 
 .submit-btn {

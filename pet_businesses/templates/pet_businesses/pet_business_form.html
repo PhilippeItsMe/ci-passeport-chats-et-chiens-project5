@@ -24,13 +24,11 @@
                 <td><a class="link" href="{% url 'pet_business_detail' business.slug %}">{{ business.firm }}</a></td>
                 <td class="hidden">{{ business.date_created }}</td>
                 <td>
-                    <a href="{% url 'pet_business_edit' business.slug business.id %}"
-                        class="btn btn-sm btn-warning">Editer</a>
+                    <a href="{% url 'pet_business_edit' business.slug business.id %}" class="yellow-btn">Editer</a>
 
                     <!-- Delete button triggering confirmation modal -->
 
-                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                        data-bs-target="#deleteModal"
+                    <button type="button" class="orange-btn" data-bs-toggle="modal" data-bs-target="#deleteModal"
                         data-href="{% url 'pet_business_delete' business.slug business.id %}">
                         Effacer
                     </button>
@@ -50,7 +48,7 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn page-link">
+        <button type="submit" class="submit-btn">
             {% if form.instance.pk %}Update Compagny{% else %}Soumettre{% endif %}
         </button>
     </form>
@@ -71,7 +69,7 @@
                 <div class="modal-footer">
                     <form method="POST" action="#" id="deleteConfirmForm">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Effacer</button>
+                        <button type="submit" class="orange-btn">Effacer</button>
                     </form>
                 </div>
             </div>
