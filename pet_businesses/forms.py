@@ -82,6 +82,9 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'id': 'id_body'}),
         }
+        labels = {
+            'content': 'Contenu'
+        }
 
 
 class UserRegistrationForm(UserCreationForm):
