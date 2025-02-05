@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Quicksand:wght@300..700&display=swap');
 
-/*----- Setup -----*/
+/*---------- Setup ----------*/
 
 * {
     margin: 0;
@@ -20,12 +20,12 @@ main {
     padding: 0 2rem;
 }
 
-/*----- Colors -----*/
+/*---------- Colors ----------*/
 
 :root {
     /*Primary color*/
     --yellow: #FCC737;
-    --orange: #dc3545;
+    --orange: #F26B0F;
 
     /*Secondary color*/
     --darkgrey: #2B2929;
@@ -44,7 +44,7 @@ main {
     background-color: var(--orange);
 }
 
-/*----- Typo -----*/
+/*---------- Typo ----------*/
 
 h1 {
     font-family: "Chewy", serif;
@@ -79,7 +79,7 @@ li {
     font-size: 1.1rem;
 }
 
-/*----- Links & Button -----*/
+/*---------- Links & Button ----------*/
 
 .link {
     color: var(--orange);
@@ -118,7 +118,7 @@ li {
     width: auto;
 }
 
-/*----- Header -----*/
+/*---------- Header ----------*/
 
 .logo {
     width: 300px;
@@ -148,7 +148,7 @@ li {
     margin-bottom: -50px;
 }
 
-/*----- Footer -----*/
+/*---------- Footer ----------*/
 
 footer {
     margin-top: 6rem;
@@ -166,10 +166,10 @@ footer {
     height: 300px;
     position: absolute;
     right: 50px;
-    top: -222px;
+    top: -218px;
 }
 
-/*----- Business List -----*/
+/*---------- Business List ----------*/
 
 .card {
     width: 100%;
@@ -207,7 +207,7 @@ footer {
     font-size: 1.3rem;
 }
 
-/*----- Business Detail -----*/
+/*---------- Business Detail ----------*/
 
 .spacing-up {
     margin-top: 3rem;
@@ -237,14 +237,14 @@ footer {
 }
 
 
-/*----- My Pet Services (Business Form) -----*/
+/*---------- My Pet Services (Business Form) ----------*/
 
 .spacing {
     margin-top: 4rem;
     margin-bottom: 2rem;
 }
 
-/*----- Responsivness -----*/
+/*---------- Responsivness ----------*/
 
 @media screen and (max-width: 768px) {
     .btneffect {
@@ -256,7 +256,7 @@ footer {
         height: 200px;
         position: absolute;
         right: 50px;
-        top: -148px;
+        top: -144px;
     }
 }
 

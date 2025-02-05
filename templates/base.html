@@ -11,15 +11,16 @@
 <head>
     <title>Passeport Chats & Chiens</title>
     <meta name="author" content="Philippe Tschanun">
-    <meta name="description"
-        content="Imagine a world where caring for your beloved pet becomes easier, 
-        more affordable, and oh-so-rewarding! Our platform is here to connect passionate pet owners 
-        with trusted businesses that cater to every furry, feathery, or scaly need. For just a small annual fee, 
-        you'll unlock exclusive perks: enjoy a fabulous 50% discount on your first purchase 
-        and a delightful CHF 20 off on your second visit—per business. Because your pet deserves the very best, and so do you! ">
-    <meta name="keywords" content="cat, dog, pet care, pet services">
+    <meta name="description" content="
+        Imaginez un monde où prendre soin de votre animal  devient plus simple, plus abordable et tellement gratifiant !
+        Notre plateforme est là pour mettre en relation des propriétaires passionnés avec des entreprises de confiance répondant à tous les besoins de votre compagnon à poils, plumes ou écailles.
+        Pour une petite cotisation annuelle, vous bénéficierez d’avantages exclusifs : profitez d'une réduction de 50 % sur votre premier achat et d’une remise de 20 CHF sur votre deuxième visite – par entreprise.
+        Parce que votre animal mérite ce qu’il y a de mieux, et vous aussi ! ">
+    <meta name="keywords" content="chat, chien, soin, réduction">
     <link rel="icon" type="image/webp" sizes="64x64" href="{% static 'images/favicon.webp' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!---------- CSS ressources ---------->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -28,7 +29,7 @@
 
 <body class="d-flex flex-column h-100 main-bg">
 
-    <!-- Navigation -->
+    <!---------- Navigation ---------->
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container-fluid">
@@ -47,21 +48,21 @@
                     </li>
                     {% if user.is_authenticated %}
                     {% if user|in_group:"Business Owners" %}
-                    <li><a class="nav-link" href="{% url 'pet_business_form' %}">My Pet Companies</a></li>
+                    <li><a class="nav-link" href="{% url 'pet_business_form' %}">Mon entreprise</a></li>
                     {% endif %}
 
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
-                            href="{% url 'account_logout' %}">Logout</a>
+                            href="{% url 'account_logout' %}">Se déconnecter</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == signup_url %}active{% endif %}" aria-current="page"
-                            href="{% url 'account_signup' %}">Register</a>
+                            href="{% url 'account_signup' %}">S'inscrire</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == login_url %}active{% endif %}" aria-current="page"
-                            href="{% url 'account_login' %}">Login</a>
+                            href="{% url 'account_login' %}">Se connecter</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -69,7 +70,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!---------- Hero Section ---------->
 
     <div id="herosection">
         <div class="container">
@@ -83,18 +84,18 @@
                 </div>
                 <div class="col-md-6 text-center text-md-start order-1 order-md-1">
                     <div>
-                        <p class="bold fake-btn-effect ">Welcome</p>
+                        <p class="bold fake-btn-effect ">Bienvenue</p>
                         <h1>Au petit soin...</h1>
-                        <p class="bold">We love pets like you do.</p>
-                        <p>Discover all our care services, treats, and joyful moments designed to pamper your
-                            beloved pet.</p>
+                        <p class="bold">Tout comme vous, nous aimons les animaux de companies.</p>
+                        <p>Découvrez tous nos services, intentions et nos instants de bonheur pensés pour choyer votre
+                            animal bien-aimé.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Displaying Django messages -->
+    <!---------- Django Message ---------->
 
     <div class=" container">
         <div class="row">
@@ -117,12 +118,14 @@
 
     </main>
 
-    <!-- Footer -->
+    <!---------- Footer ---------->
 
     <footer>
         <img class="footercat" src="{% static 'images/footercat.webp' %}" alt="cat">
-        <p class="m-0 text-center">Designed by Philippe Tschanun (Code Institue) | © 2025 Passeport Chats & Chiens</p>
+        <p class="m-0 text-center">© 2025 Passeport Chats & Chiens</p>
     </footer>
+
+    <!---------- JS ressources ---------->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
