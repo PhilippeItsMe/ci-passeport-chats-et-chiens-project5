@@ -5,16 +5,16 @@
 
 
 <div class="page-wrapper">
-    <h3>My Pet Companies</h3>
+    <h3>Mes entreprises animalières</h3>
 
-    <!-- Existing list of pet businesses -->
+    <!---------- Existing list of pet businesses ---------->
 
     {% if pet_businesses %}
     <table class="table">
         <thead>
             <tr>
-                <th>Companies</th>
-                <th class="hidden">Created</th>
+                <th>Entreprise</th>
+                <th class="hidden">Date de création</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -25,14 +25,14 @@
                 <td class="hidden">{{ business.date_created }}</td>
                 <td>
                     <a href="{% url 'pet_business_edit' business.slug business.id %}"
-                        class="btn btn-sm btn-warning">Edit</a>
+                        class="btn btn-sm btn-warning">Editer</a>
 
                     <!-- Delete button triggering confirmation modal -->
 
                     <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                         data-bs-target="#deleteModal"
                         data-href="{% url 'pet_business_delete' business.slug business.id %}">
-                        Delete
+                        Effacer
                     </button>
                 </td>
             </tr>
@@ -40,38 +40,38 @@
         </tbody>
     </table>
     {% else %}
-    <p>You have not created any pet compagny yet.</p>
+    <p>Vous n'avez pas encore créer d'entreprise animalière..</p>
     {% endif %}
 
-    <!-- Form to create a new pet business -->
+    <!---------- Form to create a new pet business ---------->
 
-    <h3 class="spacing">{% if form.instance.pk %}Edit Pet Business{% else %}Let's create a new pet compagny{% endif %}
+    <h3 class="spacing">{% if form.instance.pk %}Edit Pet Business{% else %}Créer votre entreprise animalière{% endif %}
     </h3>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn page-link">
-            {% if form.instance.pk %}Update Compagny{% else %}Create Compagny{% endif %}
+            {% if form.instance.pk %}Update Compagny{% else %}Soumettre{% endif %}
         </button>
     </form>
 
-    <!-- Delete confirmation modal -->
+    <!---------- Delete confirmation modal ---------->
 
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Pet Business?</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmation</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete this pet compagny?
-                    This action cannot be undone.
+                    Êtes-vous sur de vouloir effacer votre entreprise animalière?
+                    Cette opération est définitive.
                 </div>
                 <div class="modal-footer">
                     <form method="POST" action="#" id="deleteConfirmForm">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Effacer</button>
                     </form>
                 </div>
             </div>

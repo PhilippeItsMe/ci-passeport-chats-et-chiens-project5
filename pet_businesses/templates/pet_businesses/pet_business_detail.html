@@ -7,12 +7,15 @@
 <div class="page-wrapper">
     <div class="container">
 
-        <!-- Displaying pet business detail -->
+        <!---------- Pet business details ---------->
 
         <div class="row">
             <div class="col-md-6">
+
+                <!-- Description -->
+
                 <h2 class="post-title">{{ pet_business_detail.firm }}</h2>
-                <p class="post-subtitle spacing-up">With us since {{ pet_business_detail.date_created }}</p>
+                <p class="post-subtitle spacing-up">Avec nous depuis : {{ pet_business_detail.date_created }}</p>
                 <p>
                     {% for pet_type in pet_business_detail.pet_type_tags %}
                     <span class="wrapping-border">#{{ pet_type }}</span>
@@ -26,8 +29,11 @@
                 <p>{{ pet_business_detail.description | safe }}</p>
                 <hr class="orange-hr">
                 <div class="row spacing-up">
+
+                    <!-- Contacts -->
+
                     <div class="col-md-7">
-                        <p class="fw-bold">Feel free to contact us</p>
+                        <p class="fw-bold">Contactez-nous</p>
                         <p class="right-move-up">
                             <img class="picto" src="{% static 'images/mapmarker.svg' %}" alt="Address marker">
                             {{ pet_business_detail.firm }} <br>
@@ -47,8 +53,11 @@
                             </a>
                         </p>
                     </div>
+
+                    <!-- Social accounts -->
+
                     <div class="col-md-5">
-                        <p class="fw-bold">Follow us on</p>
+                        <p class="fw-bold">Suivez-nous sur</p>
                         <p>
                             {% if pet_business_detail.website %}
                             <a href="{{ pet_business_detail.website }}" target="_blank"><img class="picto"
@@ -82,7 +91,7 @@
 
             <div class="col-md-6">
 
-                <!-- Conditional default picture display -->
+                <!-- Picture -->
 
                 {% if pet_business_detail.featured_image and "placeholder" in pet_business_detail.featured_image.url %}
                 <img class="card-img-top rounded-corner" src="{% static 'images/defaultpetbusiness.webp' %}"
@@ -129,11 +138,11 @@
         </div>
     </div>
 
-    <!-- Displaying Comments -->
+    <!---------- Display comments ---------->
 
     <div class="row spacing-up">
         <div class="col-md-6">
-            <h3>Comments:</h3>
+            <h3>Commentaires:</h3>
             {% for comment in comments %}
             <div class="p-2 border comments
                             {% if not comment.approved and comment.author == user %}
@@ -142,20 +151,20 @@
                     {{ comment.author }}
                     <span class="font-weight-normal">
                         {{ comment.created_on }}
-                    </span> wrote:
+                    </span> a écrit:
                 </p>
                 <div id="comment{{ comment.id }}">
                     {{ comment.content | linebreaks }}
                 </div>
                 {% if not comment.approved and comment.author == user %}
                 <p class="approval">
-                    This comment is awaiting approval
+                    Ce commentaire doit être approuvé.
                 </p>
                 {% endif %}
                 {% if user|in_group:"Pet Owners" %}
                 {% if user.is_authenticated and comment.author == user %}
-                <button class="btn btn-warning btn-edit" comment_id="{{ comment.id }}">Edit</button>
-                <button class="btn btn-danger btn-delete" comment_id="{{ comment.id }}">Delete</button>
+                <button class="btn btn-warning btn-edit" comment_id="{{ comment.id }}">Editer</button>
+                <button class="btn btn-danger btn-delete" comment_id="{{ comment.id }}">Effacer</button>
                 {% endif %}
                 {% endif %}
             </div>
@@ -167,36 +176,36 @@
         <div class="col-md-6">
             <div class="card-body">
                 {% if user.is_authenticated and user|in_group:"Pet Owners" %}
-                <h3>Write a comment:</h3>
-                <p>Posting as: {{ user.username }}</p>
+                <h3>Ecrivez un commentaire:</h3>
+                <p>Publié par: {{ user.username }}</p>
                 <form id="commentForm" method="post">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
-                    <button id="submitButton" type="submit" class="btn page-link">Submit</button>
+                    <button id="submitButton" type="submit" class="btn page-link">Soumettre</button>
                 </form>
                 {% elif not user.is_authenticated %}
-                <p>Please log in to write a new comment or like a service.</p>
+                <p>Merci de vous connecter pour écrire des commentaires ou liker des services.</p>
                 {% endif %}
             </div>
         </div>
     </div>
 </div>
 
-<!-- Delete confirmation modal -->
+<!---------- Comments delete confirmation modal ---------->
 
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete comment?</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Are you sure you want to delete your comment?
-                This action cannot be undone.
+                Êtes-vous sur de vouloir effacer ce commentaire?
+                Cette opération est définitive.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                 <a id="deleteConfirm" href="#" class="btn
                     btn-danger">Delete</a>
             </div>
