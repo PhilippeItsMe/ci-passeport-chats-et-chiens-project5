@@ -90,24 +90,56 @@ li {
     font-weight: 500;
 }
 
-.page-link {
-    color: var(--orange);
-    border-radius: 10%;
+.yellow-btn {
+    padding: 0.375rem 0.75rem;
+    color: var(--darkgrey);
+    background-color: var(--yellow);
+    border: 1px solid var(--yellow);
+    border-radius: 0.375rem;
 }
 
-.page-link:hover {
+.yellow-btn:hover {
+    color: var(--darkgrey);
+    background-color: var(--offwhite);
+}
+
+.orange-btn {
+    padding: 0.375rem 0.75rem;
     color: var(--offwhite);
     background-color: var(--orange);
-    border-radius: 10%;
+    border: 1px solid var(--orange);
+    border-radius: 0.375rem;
+    text-decoration: none;
 }
 
-.fake-btn-effect {
+.orange-btn:hover {
+    color: var(--orange);
+    background-color: var(--offwhite);
+    text-decoration: none;
+}
+
+.submit-btn {
+    padding: 0.375rem 0.75rem;
+    color: var(--orange);
+    background-color: var(--offwhite);
+    border: 1px solid var(--orange);
+    border-radius: 0.375rem;
+}
+
+.submit-btn:hover {
+    color: var(--offwhite);
+    background-color: var(--orange);
+}
+
+.deco-btn {
     margin-top: 1rem;
     background-color: var(--offwhite);
     padding: 5px 10px;
     border-radius: 10px;
     display: inline-block;
 }
+
+/*---------- Wrapper ----------*/
 
 .wrapping-border {
     display: inline-block;

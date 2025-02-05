@@ -123,9 +123,9 @@
                             {% csrf_token %}
                             {% if user.is_authenticated %}
                             {% if has_liked %}
-                            <button type="submit" class="btn btn-danger">Unlike</button>
+                            <button type="submit" class="orange-btn">Unlike</button>
                             {% else %}
-                            <button type="submit" class="btn btn-warning">Like</button>
+                            <button type="submit" class="yellow-btn">Like</button>
                             {% endif %}
                             {% else %}
                             <p>Log in to like it.</p>
@@ -163,8 +163,8 @@
                 {% endif %}
                 {% if user|in_group:"Pet Owners" %}
                 {% if user.is_authenticated and comment.author == user %}
-                <button class="btn btn-warning btn-edit" comment_id="{{ comment.id }}">Editer</button>
-                <button class="btn btn-danger btn-delete" comment_id="{{ comment.id }}">Effacer</button>
+                <button class="yellow-btn btn-edit" comment_id="{{ comment.id }}">Editer</button>
+                <button class="orange-btn btn-delete" comment_id="{{ comment.id }}">Effacer</button>
                 {% endif %}
                 {% endif %}
             </div>
@@ -181,7 +181,7 @@
                 <form id="commentForm" method="post">
                     {{ comment_form | crispy }}
                     {% csrf_token %}
-                    <button id="submitButton" type="submit" class="btn page-link">Soumettre</button>
+                    <button id="submitButton" type="submit" class="submit-btn">Soumettre</button>
                 </form>
                 {% elif not user.is_authenticated %}
                 <p>Merci de vous connecter pour écrire des commentaires ou liker des services.</p>
@@ -206,8 +206,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <a id="deleteConfirm" href="#" class="btn
-                    btn-danger">Effacer</a>
+                <a id="deleteConfirm" href="#" class="orange-btn">Effacer</a>
             </div>
         </div>
     </div>
