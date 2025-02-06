@@ -15,10 +15,7 @@ main {
     flex-direction: column;
 }
 
-.page-wrapper {
-    /*Padding around the full page*/
-    padding: 0 2rem;
-}
+
 
 /*---------- Colors ----------*/
 
@@ -83,6 +80,16 @@ li {
 
 /*---------- Links & Button ----------*/
 
+
+.link:hover,
+.yellow-btn:hover,
+.orange-btn:hover,
+.submit-btn:hover,
+a:hover {
+    cursor: url('/static/images/paw-cursor.webp') 12 12, auto;
+}
+
+
 .link {
     color: var(--orange);
 }
@@ -144,6 +151,11 @@ li {
 }
 
 /*---------- Wrapper ----------*/
+
+.page-wrapper {
+    /*Padding around the full page*/
+    padding: 0 2rem;
+}
 
 .wrapping-border {
     display: inline-block;
@@ -273,7 +285,7 @@ footer {
 }
 
 
-/*---------- My Pet Services (Business Form) ----------*/
+/*---------- Business form ----------*/
 
 .spacing {
     margin-top: 4rem;

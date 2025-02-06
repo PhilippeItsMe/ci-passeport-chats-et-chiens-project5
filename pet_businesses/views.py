@@ -27,14 +27,14 @@ def custom_signup(request):
             try:
                 group = Group.objects.get(name=group_name)
                 user.groups.add(group)
-                messages.success(request, "Account created successfully!")
+                messages.success(request, "Votre compte a été créé.")
                 return redirect('login')
             except Group.DoesNotExist:
                 messages.error(request,
-                               f"The group '{group_name}' does not exist.")
+                               f"Le groupe '{group_name}' n'existe pas.")
         else:
             messages.error(request,
-                           "There was an error with your registration.")
+                           "Il y a eu une erreur avec votre inscription.")
     else:
         user_form = UserRegistrationForm()
         group_form = CustomSignupForm()
@@ -71,7 +71,7 @@ def pet_business_detail(request, slug):
 
     if request.method == "POST":
         if not request.user.groups.filter(name="Pet Owners").exists():
-            raise PermissionDenied("You do not have permission to comments.")
+            raise PermissionDenied("Vous n'avez pas la permission de faire des commentaires.")
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
@@ -79,12 +79,12 @@ def pet_business_detail(request, slug):
             comment.pet_businesse = post
             comment.save()
             messages.success(
-                request, "Comment submitted and awaiting approval."
+                request, "Commentaire soumis en attente d'approbation."
             )
             return HttpResponseRedirect(reverse('pet_business_detail',
                                                 args=[slug]))
         else:
-            messages.error(request, "There was an error with your submission.")
+            messages.error(request, "Il y a eu une erreur.")
     else:
         comment_form = CommentForm()
 
@@ -120,11 +120,11 @@ def comment_edit(request, slug, comment_id):
             comment.approved = False
             comment.save()
             messages.add_message(request, messages.SUCCESS,
-                                 'Comment updated successfully.')
+                                 'Commentaire mis à jour.')
         else:
             messages.add_message(request,
                                  messages.ERROR,
-                                 'There was an error with your submission.')
+                                 'Il y a eu une erreur.')
 
     return HttpResponseRedirect(reverse('pet_business_detail', args=[slug]))
 
@@ -141,10 +141,10 @@ def comment_delete(request, slug, comment_id):
     if comment.author == request.user:
         comment.delete()
         messages.add_message(request, messages.SUCCESS,
-                             'Comment deleted!')
+                             'Commentaire effacé!')
     else:
         messages.add_message(request, messages.ERROR,
-                             'You can only delete your own comments!')
+                             'Vous ne pouvez effacer que vos commentaires!')
 
     return HttpResponseRedirect(reverse('pet_business_detail', args=[slug]))
 
@@ -178,10 +178,10 @@ def pet_business_form(request):
             pet_business.save()
             form.save_m2m()
             messages.success(request,
-                             "Pet business submitted and awaiting approval.")
+                             "Entreprise soumise en attente d'approbation.")
             return redirect('pet_business_form')
         else:
-            messages.error(request, "There was an error with your submission.")
+            messages.error(request, "Il y a eu une erreur.")
     else:
         form = PetBusinessForm()
 
@@ -207,10 +207,10 @@ def pet_business_edit(request, slug, pet_business_id):
             pet_business.author = request.user
             pet_business.save()
             form.save_m2m()
-            messages.success(request, "Pet business updated successfully.")
+            messages.success(request, "Mise à jour réussie.")
             return redirect('pet_business_form')
         else:
-            messages.error(request, "There was an error with your submission.")
+            messages.error(request, "Il y a eu une erreur.")
     else:
         form = PetBusinessForm(instance=pet_business)
 
@@ -231,8 +231,8 @@ def pet_business_delete(request, slug, pet_business_id):
 
     if request.method == "POST":
         pet_business.delete()
-        messages.success(request, "Pet business deleted successfully.")
+        messages.success(request, "Entreprise effacée.")
         return redirect('pet_business_form')
     else:
-        messages.error(request, "There was an error with your request.")
+        messages.error(request, "Il y a eu une erreur.")
     return redirect('pet_business_form')
