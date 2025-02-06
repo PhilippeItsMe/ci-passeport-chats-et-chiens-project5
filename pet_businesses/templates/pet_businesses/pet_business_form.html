@@ -43,13 +43,14 @@
 
     <!---------- Form to create a new pet business ---------->
 
-    <h3 class="spacing">{% if form.instance.pk %}Edit Pet Business{% else %}Créer votre entreprise animalière{% endif %}
+    <h3 class="spacing">{% if form.instance.pk %}Edit Pet Business{% else %}Créez votre entreprise animalière
+        !{% endif %}
     </h3>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="submit-btn">
-            {% if form.instance.pk %}Update Compagny{% else %}Soumettre{% endif %}
+            {% if form.instance.pk %}Mettre à jour{% else %}Soumettre{% endif %}
         </button>
     </form>
 

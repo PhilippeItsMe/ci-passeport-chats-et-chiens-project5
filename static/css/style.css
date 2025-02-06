@@ -152,10 +152,19 @@ a:hover {
 
 /*---------- Wrapper ----------*/
 
+/*Full page wrapper*/
 .page-wrapper {
-    /*Padding around the full page*/
     padding: 0 2rem;
 }
+
+/*Django message wrappere*/
+.message-wrapper {
+    padding: 1 2rem;
+    border: 1px solid var(--orange) !important;
+    border-radius: 20px;
+    margin-bottom: 4rem;
+}
+
 
 .wrapping-border {
     display: inline-block;
