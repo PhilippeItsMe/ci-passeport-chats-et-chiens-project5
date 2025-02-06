@@ -104,7 +104,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'pet_businesses.forms.CustomSignupForm'
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr'
 
 TIME_ZONE = 'UTC'
 
