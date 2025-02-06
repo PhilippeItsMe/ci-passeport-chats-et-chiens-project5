@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'django_summernote',
     'cloudinary',
-    'pet_businesses'
+    'pet_businesses',
+    'pet_owners',
 ]
 
 SITE_ID = 1
