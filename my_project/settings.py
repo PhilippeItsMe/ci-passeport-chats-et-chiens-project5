@@ -102,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Email authentification
-AUTH_USER_MODEL = 'pet_businesses.CustomUser',
+AUTH_USER_MODEL = 'pet_businesses.CustomUser'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
