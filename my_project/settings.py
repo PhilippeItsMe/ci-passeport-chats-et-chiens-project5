@@ -18,6 +18,7 @@ ALLOWED_HOSTS = ['localhost',
                  '.herokuapp.com']
 
 INSTALLED_APPS = [
+    'pet_businesses',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,7 +34,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'django_summernote',
     'cloudinary',
-    'pet_businesses',
     'pet_owners',
 ]
 
@@ -102,7 +102,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Email authentification
-AUTH_USER_MODEL = 'pet_businesses.CustomUser'
+AUTH_USER_MODEL = 'pet_businesses.CustomUser',
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]

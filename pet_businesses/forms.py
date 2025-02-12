@@ -1,8 +1,8 @@
 from django import forms
 from .models import PetBusiness, Comment, CustomUser
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User, Group
-
+from django.contrib.auth.models import Group
+from django.core.exceptions import ValidationError
 
 #----------------------- Form to manage pet businesses -----------------------#
 
@@ -129,10 +129,11 @@ class CustomSignupForm(forms.Form):
 
     def signup(self, request, user):
         group_name = self.cleaned_data['group']
-        try:
-            group = Group.objects.get(name=group_name)
-            user.groups.add(group)
-        except Group.DoesNotExist:
-            raise ValueError(f"Le groupe '{group_name}' n'existe pas.")
+        group = Group.objects.filter(name=group_name).first()
+        
+        if not group:
+            raise ValidationError(f"Le groupe '{group_name}' n'existe pas.")
+
+        user.groups.add(group)
         user.save()
         return user

@@ -10,7 +10,7 @@ from cloudinary.models import CloudinaryField
 
 class CustomUser(AbstractUser):
     """
-    Model for custom users
+    Model for custom user model replacing the default user model
     """
     username = None 
     email = models.EmailField(unique=True) 
@@ -30,7 +30,11 @@ def create_groups_and_permissions():
     pet_owners_group, created = Group.objects.get_or_create(name='Pet Owners')
     pet_model_comment = apps.get_model('pet_businesses', 'Comment')
     pet_model_like = apps.get_model('pet_businesses', 'Like')
-    pet_permissions = Permission.objects.filter(content_type=ContentType.objects.get_for_model(pet_model_comment, pet_model_like))
+    pet_permissions = Permission.objects.filter(
+        content_type=ContentType.objects.get_for_model(pet_model_comment)
+        ) | Permission.objects.filter(
+        content_type=ContentType.objects.get_for_model(pet_model_like)
+        )   
     pet_owners_group.permissions.set(pet_permissions)
     business_owners_group, created = Group.objects.get_or_create(name='Business Owners')
     business_model = apps.get_model('pet_businesses', 'Business')
@@ -134,7 +138,7 @@ class Comment(models.Model):
     """
     Model for comments on pet businesses.
     """
-    pet_businesse = models.ForeignKey(PetBusiness,
+    pet_business = models.ForeignKey(PetBusiness,
                                       on_delete=models.CASCADE,
                                       related_name="comments")
     author = models.ForeignKey(settings.AUTH_USER_MODEL,

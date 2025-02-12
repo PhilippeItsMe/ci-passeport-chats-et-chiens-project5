@@ -44,7 +44,7 @@ class PostAdmin(SummernoteModelAdmin):
     """
     To display comments in admins
     """
-    list_display = ('pet_businesse', 'author', 'approved',
+    list_display = ('pet_business', 'author', 'approved',
                     'last_modified', 'date_created')
 
 
