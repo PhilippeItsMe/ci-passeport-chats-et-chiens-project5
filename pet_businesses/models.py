@@ -1,8 +1,26 @@
 from django.db import models
-from django.contrib.auth.models import User, Group, Permission
+from django.conf import settings 
+from django.contrib.auth.models import Group, Permission, AbstractUser
 from django.contrib.contenttypes.models import ContentType
 from django.apps import apps
 from cloudinary.models import CloudinaryField
+
+
+#-------------------------- Authentification models --------------------------#
+
+class CustomUser(AbstractUser):
+    """
+    Model for custom users
+    """
+    username = None 
+    email = models.EmailField(unique=True) 
+    mobile = models.CharField(max_length=15, blank=True, null=True)
+
+    USERNAME_FIELD = 'email'  
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    def __str__(self):
+        return self.email
 
 
 def create_groups_and_permissions():
@@ -19,6 +37,8 @@ def create_groups_and_permissions():
     business_permissions = Permission.objects.filter(content_type=ContentType.objects.get_for_model(business_model))
     business_owners_group.permissions.set(business_permissions)
 
+
+#-------------------------- Pet businesses models --------------------------#
 
 class ServiceType (models.Model):
     """
@@ -61,7 +81,8 @@ class PetBusiness (models.Model):
     """
     firm = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=255, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE,
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, 
+                               on_delete=models.CASCADE,
                                related_name="pet_business_user", default=1)
     street = models.CharField(max_length=255)
     number = models.CharField(max_length=8)
@@ -116,7 +137,7 @@ class Comment(models.Model):
     pet_businesse = models.ForeignKey(PetBusiness,
                                       on_delete=models.CASCADE,
                                       related_name="comments")
-    author = models.ForeignKey(User,
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
                                related_name="commenter")
     content = models.TextField()
@@ -138,7 +159,7 @@ class Like(models.Model):
     pet_business = models.ForeignKey(PetBusiness,
                     on_delete=models.CASCADE,
                     related_name="likes")
-    author = models.ForeignKey(User,
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
                     on_delete=models.CASCADE,
                     related_name="liker")
     date_created = models.DateTimeField(auto_now_add=True)

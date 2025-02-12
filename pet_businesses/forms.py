@@ -1,8 +1,10 @@
 from django import forms
-from .models import PetBusiness, Comment
+from .models import PetBusiness, Comment, CustomUser
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 
+
+#----------------------- Form to manage pet businesses -----------------------#
 
 class PetBusinessForm(forms.ModelForm):
     """
@@ -72,6 +74,8 @@ class PetBusinessForm(forms.ModelForm):
         }
 
 
+#-------------------------- Form to manage comments --------------------------#
+
 class CommentForm(forms.ModelForm):
     """
     Form to enter comments.
@@ -87,15 +91,30 @@ class CommentForm(forms.ModelForm):
         }
 
 
+#----------------------- Form to manage subscriptions -----------------------#
+
 class UserRegistrationForm(UserCreationForm):
     """
     User registration form extending Django's built-in UserCreationForm.
     """
-    email = forms.EmailField(required=True)
+    first_name = forms.CharField(max_length=30, required=True, label="Prénom")
+    last_name = forms.CharField(max_length=30, required=True, label="Nom")
+    email = forms.EmailField(required=True, label="Email")
+    mobile = forms.CharField(max_length=15, required=True, label="Téléphone")
 
     class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        model = CustomUser
+        fields = ['email', 'first_name', 'last_name', 'mobile', 'password1', 'password2']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.mobile = self.cleaned_data['mobile']
+        if commit:
+            user.save()
+        return user
 
 
 class CustomSignupForm(forms.Form):
@@ -106,7 +125,7 @@ class CustomSignupForm(forms.Form):
         ('Pet Owners', 'Pet Owners'),
         ('Business Owners', 'Business Owners'),
     ]
-    group = forms.ChoiceField(choices=group_choices, label="Sign Up as")
+    group = forms.ChoiceField(choices=group_choices, label="Signez en tant que : ")
 
     def signup(self, request, user):
         group_name = self.cleaned_data['group']
@@ -114,6 +133,6 @@ class CustomSignupForm(forms.Form):
             group = Group.objects.get(name=group_name)
             user.groups.add(group)
         except Group.DoesNotExist:
-            raise ValueError(f"The group '{group_name}' does not exist.")
+            raise ValueError(f"Le groupe '{group_name}' n'existe pas.")
         user.save()
         return user
